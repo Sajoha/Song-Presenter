@@ -7,26 +7,31 @@ var win = Ti.UI.createWindow({
 	backgroundColor: '#349CC2'
 });
 
-var lab = Ti.UI.createLabel({
+// Title for the page
+var title = Ti.UI.createLabel({
 	text: 'Songs',
 	color: '#EDA60F',
-	top: '5%'
+	top: '5%',
+	font: {
+		fontSize: 40
+	}
 });
 
-var tableView = Ti.UI.createTableView({
+// The table view containing the list of songs
+var songList = Ti.UI.createTableView({
 	top: '2%',
 	height: '60%',
 	backgroundColor: '#349CC2',
 	data: file.getSongs()
 });
 
-tableView.addEventListener('click', function(e) {
+songList.addEventListener('click', function(e) {
 	var lyrics = file.readFile(e.rowData.id);
 
 	song.display(lyrics)
 });
 
-win.add(lab);
-win.add(tableView);
+win.add(title);
+win.add(songList);
 
 win.open();
