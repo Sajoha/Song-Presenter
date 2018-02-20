@@ -1,5 +1,6 @@
 const
-	reader = require('ReadFile.js');
+	file = require('./helpers/file_helper'),
+	song = require('./helpers/song_helper');
 
 var win = Ti.UI.createWindow({
 	layout: 'vertical',
@@ -12,43 +13,20 @@ var lab = Ti.UI.createLabel({
 	top: '5%'
 });
 
-var data = [{
-	title: '1',
-	color: '#EDA60F'
-}, {
-	title: '2',
-	color: '#EDA60F'
-}, {
-	title: '3',
-	color: '#EDA60F'
-}]
-
-var list = Ti.UI.createTableView({
+var tableView = Ti.UI.createTableView({
 	top: '2%',
 	height: '60%',
 	backgroundColor: '#349CC2',
-	data: data
+	data: file.getSongs()
 });
 
-var button = Ti.UI.createButton({
-	title: 'Show',
-	top: '1%'
-});
+tableView.addEventListener('click', function(e) {
+	var lyrics = file.readFile(e.rowData.id);
 
-button.addEventListener('click', function(e) {
-	var lyrics = reader.readFile('assets/files/song.txt');
-
-	var split = lyrics.split('\n\n');
-
-	var view = Ti.UI.createView({
-
-	});
-
-	console.log(split);
+	song.display(lyrics)
 });
 
 win.add(lab);
-win.add(list);
-win.add(button);
+win.add(tableView);
 
 win.open();
